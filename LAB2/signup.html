@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>signup</title>
+        <meta charset = "utf-8">
+        <meta name = "keywords" content = "signup">
+        <meta name = "description" content = "The signup page for internet programming class">
+        <link rel = "stylesheet" type = "text/css" href="main.css">        
+    </head>
+    <body>
+        <h3> Welcome to INTERNET-PROGRAMMING MOVIE SITE</h3>
+        <p><a>로그인</a> | <a>회원가입</a></p>
+        <form method="post" action="" >
+            <p>
+                <label>이름: <input name="name" type="text"/>
+                </label>
+            </p>
+            <p>
+                <label>생일: <input type="date" name="date"/>
+                </label>
+            </p>
+            <p>
+                성별: 
+                <label><input name="gender" type="radio" value="female"> 여성 </label>
+                <label><input name="gender" type="radio" value="male"> 남성 </label>
+                
+            </p>
+            <p>
+                <label>학년: <input name="number" type="number" min="1" max="4" step="1" />
+                </label>
+            </p>
+            <p>
+                <label>아이디: <input name="id" type="text">
+                </label>
+            </p>
+            <p>
+                <label>비밀번호: <input type = "">
+                </label>
+            </p>
+            <p>
+                <label>이메일: <input name="email" type = "email" />
+                </label>
+            </p>
+            <p>
+                <label>보안 질문: <input type = "">
+                    <select name="question">
+                        <option>좋아하는 과자는?</option>
+                        <option>어릴 적 친한 친구는?</option>
+                    </select>
+                </label>
+            </p>
+            <p>
+                <label>답변: <input name="answer" type = "text"/>
+                </label>
+            </p>
+            <p>
+                <input type = "submit" value= ="Signup"/>
+                <input type = "reset" value = "Cancle"/>
+            </p>
+        </form>
+    </body>
+</html>
