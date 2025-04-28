@@ -143,7 +143,7 @@ nav a {
     overflow: hidden;
 }
 .header-text {
-    font-size: 2rem;
+    font-size: 1.3rem;
     animation: slideIn 2s forwards;
     white-space: nowrap;
     font-weight: 500;
