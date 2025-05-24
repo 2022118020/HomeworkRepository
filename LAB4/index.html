@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+        <meta charset = "utf-8"/>
+        <title>My Favorite Movies</title>
+        <link rel="stylesheet" href="main.css">
+  </head>
+  <body>
+    <header class="header-container">
+            <div class="header-text">인프밍 영화 정보 사이트입니다.</div>
+    </header>
+        
+    <nav>
+            <a href="index.html" class="menumain">메인페이지</a>
+            <a href="login.html">로그인</a>
+            <a href="signup.html">회원가입</a>
+    </nav>
+    <hr>
+    
+    <div>
+      <form id="filter-form">
+        <input type="text" id="keyword-input" placeholder="키워드를 입력하세요" />
+        <input type="submit" value="Filter results" />
+      </form>
+    </div>
+
+    <h2>Movies</h2>
+    <hr />
+
+    <div>
+      <form id="sort-form">
+        <label><input name="sort" type="radio" value="rating-desc" /> 평점 내림차순 </label><hr/>
+        <label><input name="sort" type="radio" value="rating-asc" /> 평점 오름차순 </label><hr/>
+        <label><input name="sort" type="radio" value="date-desc" /> 개봉 내림차순 </label><hr/>
+        <label><input name="sort" type="radio" value="date-asc" /> 개봉 오름차순 </label><hr/>
+      </form>
+    </div>
+
+    <div id="movie-list" class="movie-list">
+
+
+
+    </div>
+                
+     <div id="movie-list" class="movie-list"></div>
+
+    <script>
+      let allMovies = [];
+      let currentKeyword = '';
+      let currentSort = '';
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const keywordInput = document.getElementById('keyword-input');
+        const filterForm = document.getElementById('filter-form');
+        const sortForm = document.getElementById('sort-form');
+
+        fetch('product.json')
+          .then(res => res.json())
+          .then(data => {
+            allMovies = data.movies;
+            renderMovies();
+          })
+          .catch(err => console.error('Error loading movies:', err));
+
+        filterForm.addEventListener('submit', e => {
+          e.preventDefault();
+          currentKeyword = keywordInput.value.trim().toLowerCase();
+          renderMovies();
+        });
+
+        sortForm.addEventListener('change', e => {
+          currentSort = e.target.value;
+          renderMovies();
+        });
+      });
+
+      function renderMovies() {
+        const movieList = document.getElementById('movie-list');
+        movieList.innerHTML = '';
+
+        let filtered = allMovies.filter(movie => {
+          const keyword = currentKeyword;
+          if (!keyword) return true;
+          return (
+            movie.title.toLowerCase().includes(keyword) ||
+            movie.overview.toLowerCase().includes(keyword) ||
+            movie.genres.join(',').toLowerCase().includes(keyword)
+          );
+        });
+
+        if (currentSort === 'rating-desc') {
+          filtered.sort((a, b) => b.vote_average - a.vote_average);
+        } else if (currentSort === 'rating-asc') {
+          filtered.sort((a, b) => a.vote_average - b.vote_average);
+        } else if (currentSort === 'date-desc') {
+          filtered.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+        } else if (currentSort === 'date-asc') {
+          filtered.sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
+        }
+
+        filtered.forEach(movie => {
+          const card = document.createElement('div');
+          card.className = 'movie-card';
+          card.innerHTML = `
+            <img src="${movie.img}" alt="${movie.title}">
+            <div class="movie-overlay">${movie.overview}</div>
+            <h3>${movie.title}</h3>
+            <p class="release-date">📅 ${movie.release_date}</p>
+          `;
+          movieList.appendChild(card);
+        });
+      }
+    </script>
+  </body>
+</html>
